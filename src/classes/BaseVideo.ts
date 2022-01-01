@@ -153,11 +153,15 @@ export default class BaseVideo extends Base implements BaseVideoAttributes {
 		const contents =
 			data[3].response.contents.twoColumnWatchNextResults.results.results.contents;
 
-		const primaryInfo = contents.find((c: YoutubeRawData) => "videoPrimaryInfoRenderer" in c)
-			.videoPrimaryInfoRenderer;
-		const secondaryInfo = contents.find(
-			(c: YoutubeRawData) => "videoSecondaryInfoRenderer" in c
-		).videoSecondaryInfoRenderer;
+		const primaryInfo = contents.find((c: YoutubeRawData) => {
+			if ("videoPrimaryInfoRenderer" in c !== undefined)
+				return "videoPrimaryInfoRenderer" in c;
+		}).videoPrimaryInfoRenderer;
+		const secondaryInfo = contents.find((c: YoutubeRawData) => {
+			if ("videoSecondaryInfoRenderer" in c !== undefined) {
+				return "videoSecondaryInfoRenderer" in c;
+			}
+		}).videoSecondaryInfoRenderer;
 		const videoDetails = data[2].playerResponse.videoDetails;
 		return { ...secondaryInfo, ...primaryInfo, videoDetails };
 	}
