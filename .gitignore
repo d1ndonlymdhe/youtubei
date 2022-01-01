@@ -109,6 +109,10 @@ dist
 
 # yarn v2
 
+# ignore src folder
+src/
+#igonore test folder
+test/
 .yarn/cache
 .yarn/unplugged
 .yarn/build-state.yml
